@@ -17,7 +17,7 @@ public class FileService implements ReaderStrategy {
 
     private final ResourceLoader resourceLoader;
 
-    @Autowired
+
     public FileService(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }

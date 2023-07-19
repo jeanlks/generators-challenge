@@ -18,14 +18,24 @@ import java.util.Map;
 @Slf4j
 public class OperationRunner {
 
-    @Autowired
-    private MaxOperation maxOperation;
-    @Autowired
-    private MinOperation minOperation;
-    @Autowired
-    private AverageOperation averageOperation;
-    @Autowired
-    private SumOperation sumOperation;
+
+    private final MaxOperation maxOperation;
+
+    private final MinOperation minOperation;
+
+    private final AverageOperation averageOperation;
+
+    private final SumOperation sumOperation;
+
+
+    public OperationRunner(MaxOperation maxOperation, MinOperation minOperation,
+                           AverageOperation averageOperation, SumOperation sumOperation) {
+        this.maxOperation = maxOperation;
+        this.minOperation = minOperation;
+        this.averageOperation = averageOperation;
+        this.sumOperation = sumOperation;
+    }
+
 
     @Async("threadPoolTaskExecutor")
     public void process(Generator generator, Info info) {
