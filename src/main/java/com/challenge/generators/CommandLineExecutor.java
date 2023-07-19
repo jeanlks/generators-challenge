@@ -22,13 +22,12 @@ public class CommandLineExecutor  implements CommandLineRunner {
     public void run(String... args) {
         while(true){
             Scanner scanner = new Scanner(System.in);
-            log.info("Press r rerun and enter: ");
+            log.info("Press r rerun everytime you need: ");
             String input = scanner.nextLine();
 
 
             if(input.equalsIgnoreCase("r")){
                 processor.run();
-                log.info("Press r rerun and enter: ");
             } else {
                 break;
             }

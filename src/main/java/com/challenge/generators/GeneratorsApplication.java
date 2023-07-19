@@ -17,14 +17,9 @@ import java.util.Scanner;
 @EnableAsync
 public class GeneratorsApplication {
 
-    @Autowired
-    private Processor processor;
-
     public static void main(String[] args) {
         SpringApplication.run(GeneratorsApplication.class, args);
     }
-
-
 
     @Bean(name = "threadPoolTaskExecutor")
     public TaskExecutor taskExecutor() {
@@ -34,8 +29,5 @@ public class GeneratorsApplication {
         executor.setQueueCapacity(20);
         return executor;
     }
-
-
-
 
 }
