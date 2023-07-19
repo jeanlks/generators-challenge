@@ -1,42 +1,48 @@
-package com.challenge.generators;
+package com.challenge.generators.services;
 
 import com.challenge.generators.model.Generator;
 import com.challenge.generators.model.Info;
-import com.challenge.generators.services.FileService;
-import com.challenge.generators.services.JsonService;
+import com.challenge.generators.model.ReaderStrategy;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Component
+@Service
 @Slf4j
+/**
+ * Processor holds the logic to read the file, process the json and them call the threads.
+ */
 public class Processor {
 
 
-    private final JsonService jsonService;
-    private final FileService fileService;
+    private JsonService jsonService;
+    private OperationRunner operationRunner;
+
+    private ReaderStrategy fileReader;
 
 
+    public void setFileReader(ReaderStrategy readerStrategy){
+        this.fileReader = readerStrategy;
+    }
 
-    private final OperationRunner operationRunner;
-
-    @Autowired
-    public Processor(JsonService jsonService, FileService fileService, OperationRunner operationRunner){
-        this.jsonService = jsonService;
-        this.fileService = fileService;
+    public void setOperationRunner(OperationRunner operationRunner){
         this.operationRunner = operationRunner;
     }
 
+    public void setJsonService(JsonService jsonService){
+        this.jsonService = jsonService;
+    }
 
     @Async("threadPoolTaskExecutor")
     public void run() {
         try {
-            String jsonString = fileService.readFileFromResources("data.json");
+            log.info("Starting process to read file");
+            String jsonString = this.fileReader.readFile("data.json");
             Info info = jsonService.parseJson(jsonString);
-            log.info(info.toString());
+            log.info("File processed: "+info.toString());
             for (Generator generator : info.getGenerators()) {
                 this.operationRunner.process(generator, info);
             }

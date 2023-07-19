@@ -9,8 +9,9 @@ import java.util.List;
 @Slf4j
 public class SumOperation implements Operation<String, String, List<Double>> {
     @Override
-    public void run(String timestamp, String generationName, List<Double> datasets) {
-        Double minValue = datasets.stream().reduce(Double::sum).orElse(0.0);
-        log.info(timestamp+" - " +generationName+" - "+minValue);
+    public Double run(String timestamp, String generationName, List<Double> datasets) {
+        Double sumValue = datasets.stream().reduce(Double::sum).orElse(0.0);
+        log.info(timestamp+" - " +generationName+" - "+sumValue);
+        return sumValue;
     }
 }

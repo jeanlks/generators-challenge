@@ -10,8 +10,9 @@ import java.util.List;
 @Slf4j
 public class MinOperation implements Operation<String, String, List<Double>>{
     @Override
-    public void run(String timestamp, String generationName, List<Double> datasets) {
+    public Double run(String timestamp, String generationName, List<Double> datasets) {
         Double minValue = datasets.stream().min(Double::compare).orElse(0.0);
         log.info(timestamp+" - " +generationName+" - "+minValue);
+        return minValue;
     }
 }

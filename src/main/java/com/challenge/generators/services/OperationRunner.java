@@ -1,10 +1,11 @@
-package com.challenge.generators;
+package com.challenge.generators.services;
 
 import com.challenge.generators.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Service
 @Slf4j
 public class OperationRunner {
 
