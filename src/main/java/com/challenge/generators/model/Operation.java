@@ -6,6 +6,6 @@ import java.util.List;
 /**
  * Operation class utilized for the various operations we can have like, sum,average,min, max and others.
  */
-public interface Operation<T, G, D> {
-    Double run(String timestamp, String generationName, List<Double> datasets);
+public interface Operation<D> {
+    Double run(D datasets);
 }

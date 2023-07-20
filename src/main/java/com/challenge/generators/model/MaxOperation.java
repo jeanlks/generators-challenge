@@ -7,11 +7,9 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class MaxOperation implements Operation<String, String, List<Double>> {
+public class MaxOperation implements Operation<List<Double>> {
     @Override
-    public Double run(String timestamp, String generationName, List<Double> datasets) {
-        Double maxValue = datasets.stream().max(Double::compare).orElse(0.0);
-        log.info(timestamp+" - " +generationName+" - "+maxValue);
-        return maxValue;
+    public Double run(List<Double> datasets) {
+        return datasets.stream().max(Double::compare).orElse(0.0);
     }
 }

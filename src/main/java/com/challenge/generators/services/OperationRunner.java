@@ -45,11 +45,12 @@ public class OperationRunner {
                     .withZone(ZoneId.systemDefault());
 
             String formattedTime = formatter.format(now);
-            Map<OperationType, Operation<String, String, List<Double>>> operations= getAllOperations();
+            Map<OperationType, Operation<List<Double>>> operations= getAllOperations();
             OperationType operationType = OperationType.fromString(generator.getOperation());
 
             if (operations.containsKey(operationType)) {
-                operations.get(operationType).run(formattedTime, generator.getName(), dataset);
+                Double returnValue = operations.get(operationType).run(dataset);
+                log.info(formattedTime+" - " +generator.getName()+" - "+returnValue);
                 try {
                     Thread.sleep(generator.getInterval() * 1000L);
                 } catch (InterruptedException e) {
@@ -62,8 +63,8 @@ public class OperationRunner {
         }
     }
 
-    public Map<OperationType, Operation<String, String, List<Double>>> getAllOperations(){
-        Map<OperationType, Operation<String, String, List<Double>>> functionMap = new HashMap<>();
+    public Map<OperationType, Operation<List<Double>>> getAllOperations(){
+        Map<OperationType, Operation<List<Double>>> functionMap = new HashMap<>();
         functionMap.put(OperationType.SUM, sumOperation);
         functionMap.put(OperationType.MAX, maxOperation);
         functionMap.put(OperationType.MIN, minOperation);

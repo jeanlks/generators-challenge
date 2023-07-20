@@ -7,12 +7,10 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class AverageOperation implements Operation<String, String, List<Double>> {
+public class AverageOperation implements Operation<List<Double>> {
     @Override
-    public Double run(String timestamp, String generationName, List<Double> datasets) {
-        double average = datasets.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
-        log.info(timestamp+" - " +generationName+" - "+average);
-        return average;
+    public Double run(List<Double> datasets) {
+        return datasets.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
     }
 }
 

@@ -7,11 +7,9 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class SumOperation implements Operation<String, String, List<Double>> {
+public class SumOperation implements Operation< List<Double>> {
     @Override
-    public Double run(String timestamp, String generationName, List<Double> datasets) {
-        Double sumValue = datasets.stream().reduce(Double::sum).orElse(0.0);
-        log.info(timestamp+" - " +generationName+" - "+sumValue);
-        return sumValue;
+    public Double run(List<Double> datasets) {
+        return datasets.stream().reduce(Double::sum).orElse(0.0);
     }
 }
