@@ -44,14 +44,14 @@ public class CommandLineExecutor  implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        processor.setFileReader(readerStrategy);
+        processor.setJsonService(jsonService);
+        processor.setOperationRunner(operationRunner);
+
         while(true){
             Scanner scanner = new Scanner(System.in);
             log.info("Press r rerun everytime you need: ");
             String input = scanner.nextLine();
-            processor.setFileReader(readerStrategy);
-            processor.setJsonService(jsonService);
-            processor.setOperationRunner(operationRunner);
-
             if(input.equalsIgnoreCase("r")){
                 processor.run();
             } else {

@@ -18,22 +18,11 @@ import java.util.Map;
 @Slf4j
 public class OperationRunner {
 
-
-    private final MaxOperation maxOperation;
-
-    private final MinOperation minOperation;
-
-    private final AverageOperation averageOperation;
-
-    private final SumOperation sumOperation;
+    private final OperationFactory operationFactory;
 
 
-    public OperationRunner(MaxOperation maxOperation, MinOperation minOperation,
-                           AverageOperation averageOperation, SumOperation sumOperation) {
-        this.maxOperation = maxOperation;
-        this.minOperation = minOperation;
-        this.averageOperation = averageOperation;
-        this.sumOperation = sumOperation;
+    public OperationRunner(OperationFactory operationFactory) {
+        this.operationFactory = operationFactory;
     }
 
 
@@ -45,7 +34,7 @@ public class OperationRunner {
                     .withZone(ZoneId.systemDefault());
 
             String formattedTime = formatter.format(now);
-            Map<OperationType, Operation<List<Double>>> operations= getAllOperations();
+            Map<OperationType, Operation<List<Double>>> operations= this.operationFactory.getAllOperations();
             OperationType operationType = OperationType.fromString(generator.getOperation());
 
             if (operations.containsKey(operationType)) {
@@ -63,12 +52,4 @@ public class OperationRunner {
         }
     }
 
-    public Map<OperationType, Operation<List<Double>>> getAllOperations(){
-        Map<OperationType, Operation<List<Double>>> functionMap = new HashMap<>();
-        functionMap.put(OperationType.SUM, sumOperation);
-        functionMap.put(OperationType.MAX, maxOperation);
-        functionMap.put(OperationType.MIN, minOperation);
-        functionMap.put(OperationType.AVERAGE, averageOperation);
-        return functionMap;
-    }
 }
